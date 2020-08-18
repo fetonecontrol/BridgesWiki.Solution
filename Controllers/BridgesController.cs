@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.LinqToWiki.Download;
+using System.LinqToWiki.Generated;
 
 namespace Architecture.Controllers
 {
@@ -19,41 +22,15 @@ namespace Architecture.Controllers
 
     // GET api/Bridges
     [HttpGet]
-    public ActionResult<IEnumerable<Bridge>> Get(string name, string country, string city, string architect, int span)
+    public ActionResult<IEnumerable<Bridge>> Get()
     {
-      var query = _db.Bridges.AsQueryable();
-      if (name != null)
-      {
-        query = query.Where(entry => entry.Name == name);
-      }
-      if (country != null)
-      {
-        query = query.Where(entry => entry.Country == country);
-      }
-      if (city != null)
-      {
-        query = query.Where(entry => entry.City == city);
-      }
-      if (architect != null)
-      {
-        query = query.Where(entry => entry.Architect == architect);
-      }
-      if (span != 0)
-      {
-        query = query.Where(entry => entry.Span == span);
-      }
-
-      return query.ToList();
+      var pages = (from cm in wiki.Query.categorymembers()
+             where cm.title == "Category:Mammals of Indonesia"
+             select cm.title)
+            .ToEnumerable();
+      
     }
-      // List<Bridge> listOfQuery = query.ToList();
-      // int count = 0; 
-
-      // for (int i = 0; i < listOfQuery.Count; i++)
-      // {
-      //   listOfQuery[i].Span += count;
-      // }
-      // int average = count/listOfQuery.Count;
-      // return average;
+      
 
     [HttpGet("{id}")]
     public ActionResult<Bridge> Get(int id)

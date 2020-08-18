@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System;
+using LinqToWiki;
 
 namespace Architecture.Models
 {

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using LinqToWiki;
 
 namespace Architecture.Models
 {
